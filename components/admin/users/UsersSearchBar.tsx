@@ -1,4 +1,9 @@
-export default function UsersSearchBar({value, onChange}){
+interface UsersSearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export default function UsersSearchBar({value, onChange}: UsersSearchBarProps){
   return (
     <div className="w-full">
       <label className="sr-only">Search users</label>

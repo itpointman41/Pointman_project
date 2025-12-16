@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuth } from '@/context/auth-context'
+import { useAdminAuth } from '@/context/admin-auth-context'
 
 export default function AdminAuthGuard() {
-  const { isLoggedIn, isLoading } = useAuth()
+  const { isLoggedIn, isLoading } = useAdminAuth()
   const router = useRouter()
 
   useEffect(() => {

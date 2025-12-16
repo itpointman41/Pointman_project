@@ -2,7 +2,26 @@ import UserStatusBadge from './UserStatusBadge'
 import UserActionsMenu from './UserActionsMenu'
 import { Eye } from 'lucide-react'
 
-export default function UsersTable({users, onView, onEdit, onReset, onToggleStatus, onDelete}){
+type User = {
+  id: string
+  name: string
+  email: string
+  role: string
+  status: string
+  createdAt: string
+  lastLogin?: string | null
+}
+
+interface UsersTableProps {
+  users: User[];
+  onView: (user: User) => void;
+  onEdit: (user: User) => void;
+  onReset: (user: User) => void;
+  onToggleStatus: (user: User) => void;
+  onDelete: (user: User) => void;
+}
+
+export default function UsersTable({users, onView, onEdit, onReset, onToggleStatus, onDelete}: UsersTableProps){
   return (
     <div className="overflow-x-auto overflow-y-visible bg-white border rounded-md">
       <table className="min-w-full divide-y divide-gray-200">

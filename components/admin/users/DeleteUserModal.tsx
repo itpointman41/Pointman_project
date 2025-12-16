@@ -1,8 +1,25 @@
 import {useEffect} from 'react'
 
-export default function DeleteUserModal({open, user, onClose, onConfirm}){
+type User = {
+  id: string
+  name: string
+  email: string
+  role: string
+  status: string
+  createdAt: string
+  lastLogin?: string | null
+}
+
+interface DeleteUserModalProps {
+  open: boolean;
+  user: User | null;
+  onClose: () => void;
+  onConfirm: (user: User) => void;
+}
+
+export default function DeleteUserModal({open, user, onClose, onConfirm}: DeleteUserModalProps){
   useEffect(()=>{
-    const onKey = (e)=>{ if(e.key === 'Escape') onClose() }
+    const onKey = (e: KeyboardEvent)=>{ if(e.key === 'Escape') onClose() }
     if(open) window.addEventListener('keydown', onKey)
     return ()=> window.removeEventListener('keydown', onKey)
   },[open, onClose])
@@ -16,7 +33,7 @@ export default function DeleteUserModal({open, user, onClose, onConfirm}){
         <p className="text-sm text-gray-700">Are you sure you want to permanently delete <strong>{user?.name}</strong>? This action cannot be undone.</p>
         <div className="mt-6 flex justify-end gap-2">
           <button onClick={onClose} className="px-4 py-2 bg-gray-100 rounded">Cancel</button>
-          <button onClick={()=>onConfirm(user)} className="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
+          <button onClick={() => user && onConfirm(user)} className="px-4 py-2 bg-red-600 text-white rounded">Delete</button>
         </div>
       </div>
     </div>

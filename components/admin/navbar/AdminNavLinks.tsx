@@ -19,11 +19,10 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { href: '/admin', label: 'Dashboard', icon: BarChart3 },
-  { href: '/admin/users', label: 'User Management', icon: Users },
-  { href: '/admin/jobs', label: 'Job Posts', icon: Briefcase },
+  { href: '/admin/dashboard', label: 'Dashboard', icon: BarChart3 },
+  { href: '/admin/users', label: 'Users (Applicants)', icon: Users },
   { href: '/admin/applications', label: 'Applications', icon: FileText },
-  { href: '/admin/reports', label: 'Reports', icon: TrendingUp },
+  { href: '/admin/jobs', label: 'Job Listings', icon: Briefcase },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 

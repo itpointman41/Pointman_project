@@ -5,7 +5,7 @@ import { Menu, X, LogOut, User, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import MobileAdminMenu from './MobileAdminMenu'
-import { useAuth } from '@/context/auth-context'
+import { useAdminAuth } from '@/context/admin-auth-context'
 
 const NavbarInteractive: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -66,11 +66,11 @@ const NavbarInteractive: React.FC = () => {
       isOpen: boolean
       toggleOpen: () => void
     }) {
-      const { user, logout } = useAuth()
+      const { admin, logout } = useAdminAuth()
       const router = useRouter()
 
-      type LocalUser = { role?: string; firstName?: string; lastName?: string; email?: string }
-      const local = (user || {}) as LocalUser
+      type LocalAdmin = { role?: string; firstName?: string; lastName?: string; email?: string }
+      const local = (admin || {}) as LocalAdmin
 
       const fullName = `${local.firstName ?? ''} ${local.lastName ?? ''}`.trim()
       const displayName = fullName || local.email || 'Admin User'

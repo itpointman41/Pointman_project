@@ -27,7 +27,8 @@ export async function GET() {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     })
-  } catch (err) {
-    return new Response(JSON.stringify({ error: 'Failed to fetch users' }), { status: 500, headers: { 'Content-Type': 'application/json' } })
+  } catch (error) {
+    console.error('Admin users error:', error);
+    return new Response(JSON.stringify({ error: 'Failed to fetch users' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
 }

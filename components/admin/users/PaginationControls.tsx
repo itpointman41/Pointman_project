@@ -1,4 +1,10 @@
-export default function PaginationControls({page, totalPages, onPageChange}){
+interface PaginationControlsProps {
+  page: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+export default function PaginationControls({page, totalPages, onPageChange}: PaginationControlsProps){
   const pages = []
   for(let i=1;i<=totalPages;i++) pages.push(i)
   return (

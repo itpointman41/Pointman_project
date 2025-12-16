@@ -1,8 +1,25 @@
 import {useState, useEffect, useRef} from 'react'
 
-export default function EditUserModal({open, user, onClose, onSave}){
+type User = {
+  id: string
+  name: string
+  email: string
+  role: string
+  status: string
+  createdAt: string
+  lastLogin?: string | null
+}
+
+interface EditUserModalProps {
+  open: boolean;
+  user: User | null;
+  onClose: () => void;
+  onSave: (user: User) => void;
+}
+
+export default function EditUserModal({open, user, onClose, onSave}: EditUserModalProps){
   const [form, setForm] = useState({name:'', email:'', role:'Applicant', status:'Active'})
-  const firstInputRef = useRef(null)
+  const firstInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(()=>{
     if(user) setForm({name: user.name, email: user.email, role: user.role, status: user.status})
@@ -16,7 +33,7 @@ export default function EditUserModal({open, user, onClose, onSave}){
   },[open])
 
   useEffect(()=>{
-    const onKey = (e)=>{ if(e.key === 'Escape') onClose() }
+    const onKey = (e: KeyboardEvent)=>{ if(e.key === 'Escape') onClose() }
     if(open) window.addEventListener('keydown', onKey)
     return ()=> window.removeEventListener('keydown', onKey)
   },[open, onClose])
@@ -24,6 +41,7 @@ export default function EditUserModal({open, user, onClose, onSave}){
   if(!open) return null
 
   const save = ()=>{
+    if (!user) return;
     onSave({...user, ...form})
   }
 
