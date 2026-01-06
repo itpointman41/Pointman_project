@@ -68,10 +68,21 @@ export default function SignupPage() {
         }),
       });
 
+      // Check if response is JSON before parsing
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        console.error("API route returned HTML instead of JSON. This usually indicates a server error. Response preview:", text.substring(0, 200));
+        setError("Server error: Unable to process request. Please check server logs or try again later.");
+        return;
+      }
+
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Signup failed");
+        const errorMsg = data.error || "Signup failed";
+        const detailsMsg = data.details ? `: ${data.details}` : "";
+        setError(errorMsg + detailsMsg);
         return;
       }
 
@@ -177,7 +188,7 @@ export default function SignupPage() {
                     value={formData.firstName}
                     onChange={handleChange}
                     placeholder="John"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -195,7 +206,7 @@ export default function SignupPage() {
                     value={formData.lastName}
                     onChange={handleChange}
                     placeholder="Doe"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -216,7 +227,7 @@ export default function SignupPage() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -236,7 +247,7 @@ export default function SignupPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -256,7 +267,7 @@ export default function SignupPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:border-transparent ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none text-black focus:ring-2 focus:border-transparent ${
                     passwordsMatch
                       ? "border-gray-300 focus:ring-green-500"
                       : "border-red-300 focus:ring-red-500"
